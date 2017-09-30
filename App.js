@@ -1,23 +1,27 @@
+import Expo from 'expo';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import SearchScreen from './src/SearchScreen';
 
-export default class App extends React.Component {
+class App extends React.Component {
+  state = { isReady: false };
+
+  // https://github.com/GeekyAnts/NativeBase#4-getting-started
+  async componentWillMount() {
+    await Expo.Font.loadAsync({
+      Ionicons: require('@expo/vector-icons/fonts/Ionicons.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+      Roboto: require('native-base/Fonts/Roboto.ttf')
+    });
+
+    this.setState({ isReady: true });
+  }
+
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
-    );
+    // https://github.com/GeekyAnts/NativeBase#4-getting-started
+    if (!this.state.isReady) return <Expo.AppLoading />;
+
+    return <SearchScreen />;
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
