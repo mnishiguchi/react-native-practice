@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Spinner, Content, Container } from 'native-base';
+import { Container, Content, Spinner } from 'native-base';
+import { toast, successToast, dangerToast } from '../utils';
 import SearchHeader from './SearchHeader';
 import ResultList from './ResultList';
 
@@ -27,11 +28,12 @@ class SearchScreen extends React.Component {
       .then(response => response.json())
       .then(responseJson => {
         this.setState({ results: responseJson, loading: false });
+        successToast(`${responseJson.items.length} items found`);
         return responseJson.Search;
       })
       .catch(error => {
         this.setState({ loading: false });
-        console.error(error);
+        dangerToast(error);
       });
   };
 
@@ -40,8 +42,7 @@ class SearchScreen extends React.Component {
   };
 
   handlePressListItem = item => {
-    // TODO
-    alert(item.full_name);
+    toast(item.full_name);
   };
 
   render() {

@@ -1,5 +1,6 @@
 import Expo from 'expo';
 import React from 'react';
+import { Root } from 'native-base';
 import SearchScreen from './src/SearchScreen';
 
 class App extends React.Component {
@@ -20,7 +21,11 @@ class App extends React.Component {
     // https://github.com/GeekyAnts/NativeBase#4-getting-started
     if (!this.state.isReady) return <Expo.AppLoading />;
 
-    return <SearchScreen />;
+    return (
+      <Root>
+        <SearchScreen />
+      </Root>
+    );
   }
 }
 
