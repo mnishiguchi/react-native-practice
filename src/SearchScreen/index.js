@@ -1,21 +1,33 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Container, Content, Spinner } from 'native-base';
+import { Content, Spinner } from 'native-base';
 import { toast, successToast, dangerToast } from '../utils';
+import Layout from '../Layout';
 import SearchHeader from './SearchHeader';
 import ResultList from './ResultList';
 
+// https://developer.github.com/v3/search/#search-repositories
 const repositoriesUrl = (q = '') =>
   `https://api.github.com/search/repositories?q=${q}`;
 
+const initialSearchTerm = (props, defaultSearchTerm = 'react') => {
+  const { navigation } = props;
+  const params = navigation && navigation.state && navigation.state.params;
+  return params ? params.searchTerm : defaultSearchTerm;
+};
+
 class SearchScreen extends React.Component {
-  state = {
-    searchTerm: 'react',
-    selectedItem: undefined,
-    results: {
-      items: []
-    }
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchTerm: initialSearchTerm(props),
+      selectedItem: undefined,
+      results: {
+        items: []
+      }
+    };
+  }
 
   componentDidMount() {
     this.search();
@@ -42,17 +54,19 @@ class SearchScreen extends React.Component {
   };
 
   handlePressListItem = item => {
+    this.setState({ selectedItem: item });
     toast(item.full_name);
   };
 
   render() {
     const { searchTerm, loading, results: { items } } = this.state;
     return (
-      <Container style={styles.appContainer}>
+      <Layout>
         <SearchHeader
           onChangeText={this.updateSearchTerm}
           onSearch={this.search}
           searchTerm={searchTerm}
+          {...this.props}
         />
         <Content>
           {loading ? (
@@ -64,15 +78,11 @@ class SearchScreen extends React.Component {
             />
           )}
         </Content>
-      </Container>
+      </Layout>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  appContainer: {
-    paddingTop: 24
-  }
-});
+const styles = StyleSheet.create({});
 
 export default SearchScreen;

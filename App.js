@@ -1,7 +1,21 @@
 import Expo from 'expo';
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { Root } from 'native-base';
+import { DrawerNavigator } from 'react-navigation';
+import HomeScreen from './src/HomeScreen';
 import SearchScreen from './src/SearchScreen';
+import SideBar from './src/SideBar';
+
+const AppNavigator = DrawerNavigator(
+  {
+    Home: { screen: HomeScreen },
+    Search: { screen: SearchScreen }
+  },
+  {
+    contentComponent: props => <SideBar {...props} />
+  }
+);
 
 class App extends React.Component {
   state = { isReady: false };
@@ -23,10 +37,12 @@ class App extends React.Component {
 
     return (
       <Root>
-        <SearchScreen />
+        <AppNavigator />
       </Root>
     );
   }
 }
+
+const styles = StyleSheet.create({});
 
 export default App;
