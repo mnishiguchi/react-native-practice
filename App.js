@@ -5,12 +5,14 @@ import { Root } from 'native-base';
 import { DrawerNavigator } from 'react-navigation';
 import HomeScreen from './src/HomeScreen';
 import SearchScreen from './src/SearchScreen';
+import WebScreen from './src/WebScreen';
 import SideBar from './src/SideBar';
 
 const AppNavigator = DrawerNavigator(
   {
     Home: { screen: HomeScreen },
-    Search: { screen: SearchScreen }
+    Search: { screen: SearchScreen },
+    Web: { screen: WebScreen }
   },
   {
     contentComponent: props => <SideBar {...props} />

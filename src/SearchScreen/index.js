@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { Linking, StyleSheet, WebView } from 'react-native';
 import { Content, Spinner } from 'native-base';
 import { toast, successToast, dangerToast } from '../utils';
 import Layout from '../Layout';
@@ -10,10 +10,9 @@ import ResultList from './ResultList';
 const repositoriesUrl = (q = '') =>
   `https://api.github.com/search/repositories?q=${q}`;
 
-const initialSearchTerm = (props, defaultSearchTerm = 'react') => {
-  const { navigation } = props;
-  const params = navigation && navigation.state && navigation.state.params;
-  return params ? params.searchTerm : defaultSearchTerm;
+const initialSearchTerm = (props, defaultSearchTerm = '') => {
+  const searchTerm = props.navigation.state.params.searchTerm;
+  return searchTerm || defaultSearchTerm;
 };
 
 class SearchScreen extends React.Component {
@@ -54,8 +53,11 @@ class SearchScreen extends React.Component {
   };
 
   handlePressListItem = item => {
-    this.setState({ selectedItem: item });
-    toast(item.full_name);
+    this.visitWebScreen(item.html_url);
+  };
+
+  visitWebScreen = (uri = 'https://google.com') => {
+    this.props.navigation.navigate('Web', { uri });
   };
 
   render() {

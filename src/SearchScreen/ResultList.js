@@ -3,6 +3,8 @@ import numeral from 'numeral';
 import { Image, Modal, Platform, StyleSheet } from 'react-native';
 import { List, ListItem, Text, Thumbnail } from 'native-base';
 
+// Linking.openURL(url).catch(err => console.error('An error occurred', err));
+
 const rowRenderer = (item, onPressListItem) => {
   if (!item) return <Text>No item</Text>;
   const onPress = () => onPressListItem(item);

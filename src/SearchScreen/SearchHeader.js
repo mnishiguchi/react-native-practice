@@ -17,7 +17,7 @@ const SearchHeader = ({ navigation, onChangeText, onSearch, searchTerm }) => {
   return (
     <Header searchBar>
       <Left>
-        <Button transparent onPress={() => navigation.goBack(null)}>
+        <Button transparent onPress={() => navigation.goBack()}>
           <Icon name="arrow-back" />
         </Button>
       </Left>

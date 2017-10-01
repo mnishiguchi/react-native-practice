@@ -21,7 +21,12 @@ const SideBar = props => {
           dataArray={routes}
           renderRow={data => {
             return (
-              <ListItem button onPress={() => props.navigation.navigate(data)}>
+              <ListItem
+                button
+                onPress={() => {
+                  props.navigation.navigate(data);
+                }}
+              >
                 <Text>{data}</Text>
               </ListItem>
             );
